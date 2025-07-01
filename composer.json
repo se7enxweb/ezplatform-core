@@ -1,5 +1,5 @@
 {
-    "name": "ezsystems/ezplatform-core",
+    "name": "se7enxweb/ezplatform-core",
     "description": "eZ Platform core bundles container",
     "type": "library",
     "license": "GPL-2.0-only",
@@ -21,7 +21,7 @@
         }
     },
     "require": {
-        "php": "^7.1",
+        "php": "^7.1 || ^8.1 || ^8.2",
         "symfony/symfony": "^3.4"
     },
     "require-dev": {

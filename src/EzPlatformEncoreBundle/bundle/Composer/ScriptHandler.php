@@ -28,25 +28,28 @@ class ScriptHandler
         $symfonyBinDir = $options['symfony-bin-dir'];
         $timeout = $event->getComposer()->getConfig()->get('process-timout');
 
-        $php = ProcessExecutor::escape(self::getPhpExecutable());
-        $console = ProcessExecutor::escape("{$symfonyBinDir}/console");
+        $php = (self::getPhpExecutable());
+        $console = "{$symfonyBinDir}/console";
+
+        $command = [
+            $php,
+            $console,
+            CompileAssetsCommand::COMMAND_NAME,
+        ];
+
+        // Add --ansi if decorated
         if ($event->getIO()->isDecorated()) {
-            $console .= ' --ansi';
+            $command[] = '--ansi';
         }
 
-        $process = new Process(
-            "{$php} {$console} " . CompileAssetsCommand::COMMAND_NAME,
-            null,
-            null,
-            null,
-            $timeout
-        );
+        $process = new Process($command);
+        $process->setTimeout($timeout);
         $process->run(static function ($type, $buffer) use ($event) {
             $event->getIO()->write($buffer, false);
         });
 
         if (!$process->isSuccessful()) {
-            throw new RuntimeException(sprintf("An error occurred when executing the \"%s\" command:\n\n%s\n\n%s", ProcessExecutor::escape(CompileAssetsCommand::COMMAND_NAME), self::removeDecoration($process->getOutput()), self::removeDecoration($process->getErrorOutput())));
+            throw new RuntimeException(sprintf("An error occurred when executing the \"%s\" command:\n\n%s\n\n%s", (CompileAssetsCommand::COMMAND_NAME), self::removeDecoration($process->getOutput()), self::removeDecoration($process->getErrorOutput())));
         }
     }
 

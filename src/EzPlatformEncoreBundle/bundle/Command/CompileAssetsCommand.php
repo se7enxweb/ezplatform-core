@@ -36,7 +36,7 @@ class CompileAssetsCommand extends Command
 
     protected function initialize(InputInterface $input, OutputInterface $output): void
     {
-        $timeout = $input->getOption('timeout');
+        $timeout = (float) $input->getOption('timeout');
 
         if (!is_numeric($timeout)) {
             throw new InvalidArgumentException('Timeout value has to be an integer.');
@@ -45,7 +45,7 @@ class CompileAssetsCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $timeout = $input->getOption('timeout');
+        $timeout = (float) $input->getOption('timeout');
         $env = $input->getOption('env');
 
         $output->writeln(sprintf('Compiling all <comment>%s</comment> assets.', $env));

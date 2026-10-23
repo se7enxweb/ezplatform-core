@@ -21,7 +21,7 @@
         }
     },
     "require": {
-        "php": "^7.1 || ^8.1 || ^8.2",
+        "php": "^7.1 || ^8.0",
         "se7enxweb/symfony": "^3.4"
     },
     "require-dev": {
